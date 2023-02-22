@@ -114,20 +114,6 @@ export const grey = [
   { label: "Black", labelTextColor: "#fff",  value: "#000000" },
 ];
 
-// export const pureGrey = [
-//   {label: "05", value: "#f1f1f1"},
-//   {label: "10", value: "#e2e2e2"},
-//   {label: "20", value: "#c6c6c6"},
-//   {label: "30", value: "#ababab"},
-//   {label: "40", value: "#919191"},
-//   {label: "50", value: "#767676"},
-//   {label: "60", value: "#5e5e5e"},
-//   {label: "70", value: "#474747"},
-//   {label: "80", value: "#303030"},
-//   {label: "90", value: "#1b1b1b"},
-//   {label: "95", value: "#111111"},
-// ]
-
 export const brColors = [
   { label: "Main Blue", colorArray: mainBlue },
   { label: "Secondary Blue", colorArray: secondaryBlue },
@@ -137,7 +123,6 @@ export const brColors = [
   { label: "Red", colorArray: red },
   { label: "Purple", colorArray: purple },
   { label: "Grey", colorArray: grey },
-  // { label: "Pure Grey", colorArray: pureGrey },
 ];
 
 interface SelectColorOptions {

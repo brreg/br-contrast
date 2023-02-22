@@ -1,7 +1,7 @@
 import { brColors } from '@/data/colors'
 import { GetSettingsProps } from '@/pages';
 import styles from './ColorCards.module.css'
-import { GetContrast } from './contrast-calculator';
+import { FindTextColorWithHigestContrast, GetContrast, GetMinimumAllowedLcValue } from './contrast-calculator';
 
 export default function ColorCards({
   selectedColor,
@@ -17,12 +17,12 @@ export default function ColorCards({
         brColors.map( colorCategory => (
           <div key={colorCategory.label} className={styles.row}>
           {
-            colorCategory.colorArray.map( cardColor => (
-              <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value }}>
+           colorCategory.colorArray.map( cardColor => showFailedContrastPairs(cardColor.value) && (
+              <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
                 <p>{cardColor.label}</p>
                 <p>{cardColor.value}</p>
-                <div className={styles.scorecard}>
-                  ACPA Lc-{findLcValue(cardColor.value, selectedColor, selectedColorIsBackground, fontSize, fontWeight)}
+                <div className={styles.scorecard} style={{ backgroundColor: checkboxStatus(cardColor.value)}}>
+                  <p>ACPA Lc-{findLcValue(cardColor.value)}</p>
                 </div>
               </div>
             ))
@@ -32,12 +32,43 @@ export default function ColorCards({
       }
     </ul>
   )
-}
 
-function findLcValue(cardColor: string, selectedColor: string, selectedColorIsBackground: boolean, fontSize: number, fontWeight: number) : string {
-  if (selectedColorIsBackground) {
-    return GetContrast(cardColor, selectedColor, fontSize, fontWeight)
-  } else {
-    return GetContrast(selectedColor, cardColor, fontSize, fontWeight)
+  function findLcValue(cardColor: string) : string {
+    if (selectedColorIsBackground) {
+      return GetContrast(cardColor, selectedColor)
+    } else {
+      return GetContrast(selectedColor, cardColor)
+    }
+  }
+
+  function isACPAvalid(cardColor: string) : boolean {
+    const Lc = findLcValue(cardColor)
+    const minLc = GetMinimumAllowedLcValue(fontWeight, fontSize)
+
+    if (+Lc > (minLc as number)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function checkboxStatus(cardColor: string) : string {
+    const i = isACPAvalid(cardColor)
+
+    if (i) {
+      return 'green'
+    } else {
+      return 'red'
+    }
+  }
+
+  function showFailedContrastPairs(cardColor: string) : boolean{
+    const contrastPair = isACPAvalid(cardColor)
+
+    if (!failedContrastPairIsHidden) {
+      return true
+    } else {
+      return contrastPair
+    }
   }
 }

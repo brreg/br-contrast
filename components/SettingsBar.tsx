@@ -11,10 +11,9 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import styles from './SettingsBar.module.css';
 import Box from '@mui/material/Box';
-import { brColors } from '@/data/colors';
+import { AllColorOptionsInFlatArray, brColors } from '@/data/colors';
 import { ACPA, FontWeight200 } from '@/data/acpaTable';
-
-
+import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
 
 export default function SettingsBar({
   color,
@@ -65,7 +64,7 @@ export default function SettingsBar({
             <em>None</em>
           </MenuItem>
           {
-            colorOptions.map((color) => <MenuItem key={color.value} value={color.value}><div className={styles.colorbox} style={{ backgroundColor: color.value }} />{color.label} - {color.value}</MenuItem>)
+            AllColorOptionsInFlatArray.map((color) => <MenuItem key={color.value} value={color.value}><div className={styles.colorbox} style={{ backgroundColor: color.value }} />{color.label} - {color.value}</MenuItem>)
           }
         </Select>
       </FormControl>
@@ -123,6 +122,10 @@ export default function SettingsBar({
           }
         </Select>
       </FormControl>
+      <div>
+        <p>Minimum allowed Lc value: {GetMinimumAllowedLcValue(fontWeight, fontSize)}</p>
+        <p>Combination is valid: {String(FontWeightAndSizeIsValid(fontWeight, fontSize))}</p>
+      </div>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
         <FormLabel component="legend">Test for</FormLabel>
         <FormGroup>
@@ -137,10 +140,3 @@ export default function SettingsBar({
     </div>
   );
 }
-
-interface SelectColorOptions {
-  label: string,
-  value: string;
-}
-let colorOptions: SelectColorOptions[] = [];
-brColors.map((val) => colorOptions = colorOptions.concat(val.colorArray));

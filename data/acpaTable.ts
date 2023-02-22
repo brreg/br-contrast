@@ -1,33 +1,3 @@
-// export const FontWeight100 = [
-//   { fontSize: 12, minimumValidLc: 999, valid: false },
-//   { fontSize: 14, minimumValidLc: 999, valid: false },
-//   { fontSize: 16, minimumValidLc: 999, valid: false },
-//   { fontSize: 18, minimumValidLc: 999, valid: false },
-//   { fontSize: 20, minimumValidLc: 999, valid: false },
-//   { fontSize: 22, minimumValidLc: 999, valid: false },
-//   { fontSize: 24, minimumValidLc: 999, valid: false },
-//   { fontSize: 26, minimumValidLc: 999, valid: false },
-//   { fontSize: 28, minimumValidLc: 999, valid: false },
-//   { fontSize: 30, minimumValidLc: 999, valid: false },
-//   { fontSize: 32, minimumValidLc: 999, valid: false },
-//   { fontSize: 34, minimumValidLc: 999, valid: false },
-//   { fontSize: 36, minimumValidLc: 999, valid: false },
-//   { fontSize: 38, minimumValidLc: 999, valid: false },
-//   { fontSize: 40, minimumValidLc: 999, valid: false },
-//   { fontSize: 42, minimumValidLc: 999, valid: false },
-//   { fontSize: 44, minimumValidLc: 999, valid: false },
-//   { fontSize: 46, minimumValidLc: 999, valid: false },
-//   { fontSize: 48, minimumValidLc: 999, valid: false },
-//   { fontSize: 50, minimumValidLc: 999, valid: false },
-//   { fontSize: 52, minimumValidLc: 999, valid: false },
-//   { fontSize: 54, minimumValidLc: 999, valid: false },
-//   { fontSize: 56, minimumValidLc: 999, valid: false },
-//   { fontSize: 58, minimumValidLc: 999, valid: false },
-//   { fontSize: 60, minimumValidLc: 999, valid: false },
-//   { fontSize: 62, minimumValidLc: 999, valid: false },
-//   { fontSize: 64, minimumValidLc: 999, valid: false },
-// ]
-
 export const FontWeight200 = [
   { fontSize: 12, minimumValidLc: 999, valid: false },
   { fontSize: 14, minimumValidLc: 999, valid: false },
@@ -269,7 +239,6 @@ export const FontWeight900 = [
 ]
 
 export const ACPA = [
-  // { label: 100, array: FontWeight100},
   { label: "200", value: 200, array: FontWeight200},
   { label: "300", value: 300, array: FontWeight300},
   { label: "400 (normal)", value: 400, array: FontWeight400},

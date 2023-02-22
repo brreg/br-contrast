@@ -10,8 +10,7 @@ import FormLabel from '@mui/material/FormLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import styles from './SettingsBar.module.css';
-import Box from '@mui/material/Box';
-import { AllColorOptionsInFlatArray, brColors } from '@/data/colors';
+import { AllColorOptionsInFlatArray } from '@/data/colors';
 import { ACPA, FontWeight200 } from '@/data/acpaTable';
 import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
 

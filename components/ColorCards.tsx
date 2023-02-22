@@ -1,7 +1,7 @@
 import { brColors } from '@/data/colors'
 import { GetSettingsProps } from '@/pages';
 import styles from './ColorCards.module.css'
-import { FindTextColorWithHigestContrast, GetContrast, GetMinimumAllowedLcValue } from './contrast-calculator';
+import { GetContrast, GetMinimumAllowedLcValue } from './contrast-calculator';
 
 export default function ColorCards({
   selectedColor,
@@ -21,7 +21,7 @@ export default function ColorCards({
               <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
                 <p>{cardColor.label}</p>
                 <p>{cardColor.value}</p>
-                <div className={styles.scorecard} style={{ backgroundColor: checkboxStatus(cardColor.value)}}>
+                <div className={styles.scorecard} style={{ backgroundColor: checkboxStatus(cardColor.value), color: 'white'}}>
                   <p>ACPA Lc-{findLcValue(cardColor.value)}</p>
                 </div>
               </div>

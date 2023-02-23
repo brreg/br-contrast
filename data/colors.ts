@@ -27,7 +27,7 @@ export const secondaryBlue = [
 ];
 
 export const green = [
-  { label: "Green-025", value: "#e7fee9" },
+  { label: "Green-025", labelTextColor: "#000", value: "#e7fee9" },
   { label: "Green-05", labelTextColor: "#000", value: "#ccfdd0" },
   { label: "Green-10", labelTextColor: "#000", value: "#87fb92" },
   { label: "Green-20", labelTextColor: "#000", value: "#47e25c" },

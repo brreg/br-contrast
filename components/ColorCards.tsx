@@ -15,19 +15,21 @@ export default function ColorCards({
     <ul className={styles.list}>
       {
         brColors.map( colorCategory => (
-          <div key={colorCategory.label} className={styles.row}>
+          <li key={colorCategory.label} className={styles.row}>
           {
            colorCategory.colorArray.map( cardColor => showFailedContrastPairs(cardColor.value) && (
               <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
-                <p>{cardColor.label}</p>
-                <p>{cardColor.value}</p>
+                <div className={styles.cardLabelText}>
+                  <p>{cardColor.label}</p>
+                  <p>{cardColor.value}</p>
+                </div>
                 <div className={styles.scorecard} style={{ backgroundColor: checkboxStatus(cardColor.value), color: 'white'}}>
                   <p>APCA Lc-{findLcValue(cardColor.value)}</p>
                 </div>
               </div>
             ))
           }
-          </div>
+          </li>
         ))
       }
     </ul>

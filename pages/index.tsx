@@ -13,8 +13,12 @@ export interface AllSettingsProps {
   setFontSize: (param: number) => void
   fontWeight: number
   setFontWeight: (param: number) => void
-  testForWCAG2: boolean
-  setTestForWCAG2: (param: boolean) => void
+  testForWCAG_AA: boolean
+  setTestForWCAG_AA: (param: boolean) => void
+  testForWCAG_AAA: boolean
+  setTestForWCAG_AAA: (param: boolean) => void
+  testForAPCA: boolean
+  setTestForAPCA: (param: boolean) => void
 }
 
 export interface GetSettingsProps {
@@ -23,7 +27,9 @@ export interface GetSettingsProps {
   failedContrastPairIsHidden: boolean
   fontSize: number
   fontWeight: number
-  testForWCAG2: boolean
+  testForWCAG_AA: boolean
+  testForWCAG_AAA: boolean
+  testForAPCA: boolean
 }
 
 export default function Home() {
@@ -32,7 +38,9 @@ export default function Home() {
   const [failedContrastPairIsHidden, setFailedContrastPairIsHidden] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [fontWeight, setFontWeight] = useState(400);
-  const [testForWCAG2, setTestForWCAG2] = useState(true);
+  const [testForWCAG_AA, setTestForWCAG_AA] = useState(false);
+  const [testForWCAG_AAA, setTestForWCAG_AAA] = useState(false);
+  const [testForAPCA, setTestForAPCA] = useState(true);
 
   return (
     <div>
@@ -47,8 +55,12 @@ export default function Home() {
         setFontSize={setFontSize}
         fontWeight={fontWeight}
         setFontWeight={setFontWeight}
-        testForWCAG2={testForWCAG2}
-        setTestForWCAG2={setTestForWCAG2}
+        testForWCAG_AA={testForWCAG_AA}
+        setTestForWCAG_AA={setTestForWCAG_AA}
+        testForWCAG_AAA={testForWCAG_AAA}
+        setTestForWCAG_AAA={setTestForWCAG_AAA}
+        testForAPCA={testForAPCA}
+        setTestForAPCA={setTestForAPCA}
       />
       <ColorCards 
         selectedColor={color}
@@ -56,7 +68,9 @@ export default function Home() {
         failedContrastPairIsHidden={failedContrastPairIsHidden}
         fontSize={fontSize}
         fontWeight={fontWeight}
-        testForWCAG2={testForWCAG2}
+        testForWCAG_AA={testForWCAG_AA}
+        testForWCAG_AAA={testForWCAG_AAA}
+        testForAPCA={testForAPCA}
       />
     </div>
     

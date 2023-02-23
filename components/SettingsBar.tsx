@@ -13,6 +13,7 @@ import styles from './SettingsBar.module.css';
 import { AllColorOptionsInFlatArray } from '@/data/colors';
 import { APCA, FontWeight200 } from '@/data/apcaTable';
 import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
+import { WCAG } from '@/data/wcagTable';
 
 export default function SettingsBar({
   color,
@@ -25,8 +26,12 @@ export default function SettingsBar({
   setFontSize,
   fontWeight,
   setFontWeight,
-  testForWCAG2,
-  setTestForWCAG2
+  testForWCAG_AA,
+  setTestForWCAG_AA,
+  testForWCAG_AAA,
+  setTestForWCAG_AAA,
+  testForAPCA,
+  setTestForAPCA,
 }: AllSettingsProps) {
 
   const setColorValue = (event: SelectChangeEvent) => {
@@ -44,8 +49,14 @@ export default function SettingsBar({
   const setFontWeightValue = (event: SelectChangeEvent) => {
     setFontWeight(+event.target.value);
   };
-  const setTestForWCAG2Value = () => {
-    setTestForWCAG2(!testForWCAG2);
+  const setTestForWCAG_AA_Value = () => {
+    setTestForWCAG_AA(!testForWCAG_AA);
+  };
+  const setTestForWCAG_AAA_Value = () => {
+    setTestForWCAG_AAA(!testForWCAG_AAA);
+  };
+  const setTestForAPCAValue = () => {
+    setTestForAPCA(!testForAPCA);
   };
 
   return (
@@ -117,7 +128,7 @@ export default function SettingsBar({
           label="font-Weight"
         >
           {
-            APCA.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
+            WCAG.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
           }
         </Select>
       </FormControl>
@@ -130,9 +141,21 @@ export default function SettingsBar({
         <FormGroup>
           <FormControlLabel
             control={
-              <Checkbox checked={testForWCAG2} onChange={setTestForWCAG2Value} name="WCAG 2" />
+              <Checkbox checked={testForAPCA} onChange={setTestForAPCAValue} name="APCA" />
             }
-            label="WCAG 2"
+            label="APCA"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={testForWCAG_AAA} onChange={setTestForWCAG_AAA_Value} name="WCAG AAA" />
+            }
+            label="WCAG AAA"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox checked={testForWCAG_AA} onChange={setTestForWCAG_AA_Value} name="WCAG AA" />
+            }
+            label="WCAG AA"
           />
         </FormGroup>
       </FormControl>

@@ -1,5 +1,6 @@
 import { APCA } from '@/data/apcaTable';
 import { AllColorOptionsInFlatArray } from '@/data/colors';
+import { WCAG } from '@/data/wcagTable';
 import { calcAPCA } from 'apca-w3';
 // @ts-ignore
 import { colorParsley } from 'colorparsley';
@@ -17,6 +18,18 @@ export function GetMinimumAllowedLcValue(fontWeight: number, fontSize: number) {
   const fontWeightObj = APCA.find( (i) => i.value === fontWeight)
   const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
   return obj?.minimumValidLc
+}
+
+export function GetMinimumAllowed_AAA_Value(fontWeight: number, fontSize: number) {
+  const fontWeightObj = WCAG.find( (i) => i.value === fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+  return obj?.AAA_minimumValidContrast
+}
+
+export function GetMinimumAllowed_AA_Value(fontWeight: number, fontSize: number) {
+  const fontWeightObj = WCAG.find( (i) => i.value === fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+  return obj?.AA_minimumValidContrast
 }
 
 export function FontWeightAndSizeIsValid(fontWeight: number, fontSize: number) {

@@ -11,7 +11,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import styles from './SettingsBar.module.css';
 import { AllColorOptionsInFlatArray } from '@/data/colors';
-import { ACPA, FontWeight200 } from '@/data/acpaTable';
+import { APCA, FontWeight200 } from '@/data/apcaTable';
 import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
 
 export default function SettingsBar({
@@ -117,7 +117,7 @@ export default function SettingsBar({
           label="font-Weight"
         >
           {
-            ACPA.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
+            APCA.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
           }
         </Select>
       </FormControl>

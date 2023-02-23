@@ -238,7 +238,7 @@ export const FontWeight900 = [
   { fontSize: 64, minimumValidLc: 999, valid: false },
 ]
 
-export const ACPA = [
+export const APCA = [
   { label: "200", value: 200, array: FontWeight200},
   { label: "300", value: 300, array: FontWeight300},
   { label: "400 (normal)", value: 400, array: FontWeight400},

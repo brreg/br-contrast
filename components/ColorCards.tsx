@@ -22,7 +22,7 @@ export default function ColorCards({
                 <p>{cardColor.label}</p>
                 <p>{cardColor.value}</p>
                 <div className={styles.scorecard} style={{ backgroundColor: checkboxStatus(cardColor.value), color: 'white'}}>
-                  <p>ACPA Lc-{findLcValue(cardColor.value)}</p>
+                  <p>APCA Lc-{findLcValue(cardColor.value)}</p>
                 </div>
               </div>
             ))
@@ -41,7 +41,7 @@ export default function ColorCards({
     }
   }
 
-  function isACPAvalid(cardColor: string) : boolean {
+  function isAPCAvalid(cardColor: string) : boolean {
     const Lc = findLcValue(cardColor)
     const minLc = GetMinimumAllowedLcValue(fontWeight, fontSize)
 
@@ -53,7 +53,7 @@ export default function ColorCards({
   }
 
   function checkboxStatus(cardColor: string) : string {
-    const i = isACPAvalid(cardColor)
+    const i = isAPCAvalid(cardColor)
 
     if (i) {
       return 'green'
@@ -63,7 +63,7 @@ export default function ColorCards({
   }
 
   function showFailedContrastPairs(cardColor: string) : boolean{
-    const contrastPair = isACPAvalid(cardColor)
+    const contrastPair = isAPCAvalid(cardColor)
 
     if (!failedContrastPairIsHidden) {
       return true

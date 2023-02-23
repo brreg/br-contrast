@@ -3,12 +3,13 @@
   /* transition: 0.3s; */
   border-width: 0px;
   margin: 5px;
-  width: 110px;
+  width: 180px;
   font-size: 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding-bottom: 15px;
+  font-size: 18px;
 }
 
 .cardLabelText {
@@ -19,25 +20,29 @@
   margin: 0;
 }
 
+.outerScorecard {
+  border-style: solid;
+  border-color: white;
+}
+
 .scorecard {
   align-items: center;
   text-align: center;
-  margin-left: 5px;
+  margin-left: 10px;
   border-radius: 10px;
   border-style: solid;
-  border-color: white;
-  width: auto;
+  outline: solid white;
+  width: auto + 10px;
   height: auto;
 }
 
 .scorecard > p {
-  margin: 5px;
+  margin: 5px 10px 5px 10px;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 20px ;
 }
 
 .list {

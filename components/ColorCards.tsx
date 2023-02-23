@@ -24,7 +24,7 @@ export default function ColorCards({
               <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
                 <div className={styles.cardLabelText}>
                   <p>{cardColor.label}</p>
-                  <p>{cardColor.value}</p>
+                  <p>{cardColor.value.toUpperCase()}</p>
                 </div>
                 {
                   testForAPCA &&

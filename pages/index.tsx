@@ -38,8 +38,8 @@ export default function Home() {
   const [failedContrastPairIsHidden, setFailedContrastPairIsHidden] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [fontWeight, setFontWeight] = useState(400);
-  const [testForWCAG_AA, setTestForWCAG_AA] = useState(false);
-  const [testForWCAG_AAA, setTestForWCAG_AAA] = useState(false);
+  const [testForWCAG_AA, setTestForWCAG_AA] = useState(true);
+  const [testForWCAG_AAA, setTestForWCAG_AAA] = useState(true);
   const [testForAPCA, setTestForAPCA] = useState(true);
 
   return (

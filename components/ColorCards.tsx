@@ -161,12 +161,14 @@ export default function ColorCards({
   }
 
   function showFailedContrastPairs(cardColor: string) : boolean{
-    const contrastPair = isAPCAvalid(cardColor)
+    const APCA = isAPCAvalid(cardColor)
+    const AA = is_AA_valid(cardColor)
+    const AAA = is_AAA_valid(cardColor)
 
     if (!failedContrastPairIsHidden) {
       return true
     } else {
-      return contrastPair
+      return APCA || AA || AAA
     }
   }
 }

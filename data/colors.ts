@@ -115,6 +115,7 @@ export const grey = [
 ];
 
 export const brColors = [
+  { label: "Grey", colorArray: grey },
   { label: "Main Blue", colorArray: mainBlue },
   { label: "Secondary Blue", colorArray: secondaryBlue },
   { label: "Green", colorArray: green },
@@ -122,7 +123,6 @@ export const brColors = [
   { label: "Orange", colorArray: orange },
   { label: "Red", colorArray: red },
   { label: "Purple", colorArray: purple },
-  { label: "Grey", colorArray: grey },
 ];
 
 interface SelectColorOptions {

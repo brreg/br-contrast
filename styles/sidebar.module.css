@@ -1,0 +1,14 @@
+.sidebar {
+  height: 100%;
+  width: 20%;
+  min-width: 500px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #2C3132;
+}
+
+.preview {
+  padding: 0px 10px 0px 10px;
+  margin: 0 5px 0 5px;
+}

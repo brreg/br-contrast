@@ -74,7 +74,7 @@ export default function SettingsBar({
             <em>None</em>
           </MenuItem>
           {
-            AllColorOptionsInFlatArray.map((color) => <MenuItem key={color.value} value={color.value}><div className={styles.colorbox} style={{ backgroundColor: color.value }} />{color.label} - {color.value}</MenuItem>)
+            AllColorOptionsInFlatArray.map((color) => <MenuItem key={color.value} value={color.value}><div className={styles.colorbox} style={{ backgroundColor: color.value }} />{color.label} - {color.value.toUpperCase()}</MenuItem>)
           }
         </Select>
       </FormControl>

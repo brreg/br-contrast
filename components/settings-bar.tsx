@@ -1,4 +1,4 @@
-import { AllSettingsProps } from '@/pages';
+import { SettingsProps } from '@/pages';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
@@ -9,17 +9,19 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import styles from './SettingsBar.module.css';
+import styles from '@/styles/settings-bar.module.css';
 import { AllColorOptionsInFlatArray } from '@/data/colors';
-import { APCA, FontWeight200 } from '@/data/apcaTable';
+import { FontWeight200 } from '@/data/apcaTable';
 import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
 import { WCAG } from '@/data/wcagTable';
 
 export default function SettingsBar({
-  color,
-  setColor,
   colorIsBackground,
   setColorIsBackground,
+  textColor,
+  setTextColor,
+  backgroundColor,
+  setBackgroundColor,
   failedContrastPairIsHidden,
   setFailedContrastPairIsHidden,
   fontSize,
@@ -32,13 +34,24 @@ export default function SettingsBar({
   setTestForWCAG_AAA,
   testForAPCA,
   setTestForAPCA,
-}: AllSettingsProps) {
+}: SettingsProps ) {
 
   const setColorValue = (event: SelectChangeEvent) => {
-    setColor(event.target.value);
+    // setColor(event.target.value);
+    if (colorIsBackground) {
+      setBackgroundColor(event.target.value)
+    } else {
+      setTextColor(event.target.value)
+    }
   };
   const setColorIsBackgroundValue = (event: SelectChangeEvent) => {
-    setColorIsBackground(JSON.parse(event.target.value));
+    const isBackground = JSON.parse(event.target.value)
+    setColorIsBackground(isBackground);
+    
+    const newTextColor = backgroundColor
+    const newBackgroundColor = textColor
+    setBackgroundColor(newBackgroundColor)
+    setTextColor(newTextColor)
   };
   const setFailedContrastPairIsHiddenValue = (event: SelectChangeEvent) => {
     setFailedContrastPairIsHidden(JSON.parse(event.target.value));
@@ -66,7 +79,7 @@ export default function SettingsBar({
         <Select
           labelId="select-color-label"
           id="select-color"
-          value={color}
+          value={getSelectedColor()}
           onChange={setColorValue}
           label="Color"
         >
@@ -161,4 +174,12 @@ export default function SettingsBar({
       </FormControl>
     </div>
   );
+
+  function getSelectedColor() : string {
+    if (colorIsBackground) {
+      return backgroundColor;
+    } else {
+      return textColor;
+    }
+  }
 }

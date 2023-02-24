@@ -1,19 +1,23 @@
 import { brColors, green, red } from '@/data/colors'
-import { GetSettingsProps } from '@/pages';
-import styles from './ColorCards.module.css'
+import { ColorCardsProps } from '@/pages';
+import styles from '@/styles/color-cards.module.css'
 import { GetContrast, GetMinimumAllowedLcValue, GetMinimumAllowed_AAA_Value, GetMinimumAllowed_AA_Value } from './contrast-calculator';
 import { hex } from 'wcag-contrast'
 
 export default function ColorCards({
-  selectedColor,
-  selectedColorIsBackground,
+  dropdownColorIsBackground,
+  textColor,
+  setTextColor,
+  backgroundColor,
+  setBackgroundColor,
+  setShowSidebar,
   failedContrastPairIsHidden,
   fontSize,
   fontWeight,
   testForWCAG_AA,
   testForWCAG_AAA,
   testForAPCA,
-}: GetSettingsProps) {
+}: ColorCardsProps ) {
   return (
     <ul className={styles.list}>
       {
@@ -21,7 +25,7 @@ export default function ColorCards({
           <li key={colorCategory.label} className={styles.row}>
           {
            colorCategory.colorArray.map( cardColor => showFailedContrastPairs(cardColor.value) && (
-              <div key={cardColor.value} className={styles.card} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
+              <button key={cardColor.value} className={styles.card} onClick={() => click(cardColor.value)} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
                 <div className={styles.cardLabelText}>
                   <p>{cardColor.label}</p>
                   <p>{cardColor.value.toUpperCase()}</p>
@@ -44,7 +48,7 @@ export default function ColorCards({
                     <p>{findWCAGValue(cardColor.value)} AA</p>
                   </div>
                 }
-              </div>
+              </button>
             ))
           }
           </li>
@@ -53,19 +57,34 @@ export default function ColorCards({
     </ul>
   )
 
-  function findLcValue(cardColor: string) : string {
-    if (selectedColorIsBackground) {
-      return GetContrast(cardColor, selectedColor)
+  function click(color: string) {
+    setColor(color)
+    setShowSidebar(true)
+  }
+
+  function setColor(color: string) {
+    if (dropdownColorIsBackground) {
+      setTextColor(color)
     } else {
-      return GetContrast(selectedColor, cardColor)
+      setBackgroundColor(color)
+    }
+  }
+
+  function findLcValue(cardColor: string) : string {
+    if (dropdownColorIsBackground) {
+      return GetContrast(cardColor, backgroundColor)
+    } else {
+      return GetContrast(textColor, cardColor)
     }
   }
 
   function findWCAGValue(cardColor: string) : string {
-    if (selectedColor === '') {
-      return ""
+    if (dropdownColorIsBackground && backgroundColor !== '') {
+      return hex(cardColor, backgroundColor).toFixed(1).toString()
+    } else if (!dropdownColorIsBackground && textColor !== '') {
+      return hex(cardColor, textColor).toFixed(1).toString()
     } else {
-      return hex(cardColor, selectedColor).toFixed(1).toString()
+      return ""
     }
   }
 

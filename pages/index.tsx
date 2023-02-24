@@ -1,8 +1,13 @@
-import ColorCards from '@/components/ColorCards';
-import SettingsBar from '@/components/SettingsBar';
+import ColorCards from '@/components/color-cards';
+import SettingsBar from '@/components/settings-bar';
+import Sidebar from '@/components/sidebar';
 import { useState } from 'react';
 
-export interface AllSettingsProps {
+export interface SettingsProps {
+  textColor: string
+  setTextColor: (param: string) => void
+  backgroundColor: string
+  setBackgroundColor: (param: string) => void
   color: string
   setColor: (param: string) => void
   colorIsBackground: boolean
@@ -21,9 +26,13 @@ export interface AllSettingsProps {
   setTestForAPCA: (param: boolean) => void
 }
 
-export interface GetSettingsProps {
-  selectedColor: string
-  selectedColorIsBackground: boolean
+export interface ColorCardsProps {
+  textColor: string
+  setTextColor: (param: string) => void
+  backgroundColor: string
+  setBackgroundColor: (param: string) => void
+  setShowSidebar: (param: boolean) => void
+  dropdownColorIsBackground: boolean
   failedContrastPairIsHidden: boolean
   fontSize: number
   fontWeight: number
@@ -32,8 +41,19 @@ export interface GetSettingsProps {
   testForAPCA: boolean
 }
 
+export interface SidebarProps {
+  showSidebar: boolean
+  setShowSidebar: (param: boolean) => void
+  fontSize: number
+  fontWeight: number
+  textColor: string
+  backgroundColor: string
+}
+
 export default function Home() {
   const [color, setColor] = useState('');
+  const [textColor, setTextColor] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('');
   const [colorIsBackground, setColorIsBackground] = useState(false);
   const [failedContrastPairIsHidden, setFailedContrastPairIsHidden] = useState(false);
   const [fontSize, setFontSize] = useState(16);
@@ -41,6 +61,7 @@ export default function Home() {
   const [testForWCAG_AA, setTestForWCAG_AA] = useState(true);
   const [testForWCAG_AAA, setTestForWCAG_AAA] = useState(true);
   const [testForAPCA, setTestForAPCA] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   return (
     <div>
@@ -48,6 +69,10 @@ export default function Home() {
         color={color}
         setColor={setColor}
         colorIsBackground={colorIsBackground}
+        textColor={textColor}
+        setTextColor={setTextColor}
+        backgroundColor={backgroundColor}
+        setBackgroundColor={setBackgroundColor}
         setColorIsBackground={setColorIsBackground}
         failedContrastPairIsHidden={failedContrastPairIsHidden}
         setFailedContrastPairIsHidden={setFailedContrastPairIsHidden}
@@ -63,14 +88,26 @@ export default function Home() {
         setTestForAPCA={setTestForAPCA}
       />
       <ColorCards 
-        selectedColor={color}
-        selectedColorIsBackground={colorIsBackground}
+        dropdownColorIsBackground={colorIsBackground}
+        textColor={textColor}
+        setTextColor={setTextColor}
+        backgroundColor={backgroundColor}
+        setBackgroundColor={setBackgroundColor}
+        setShowSidebar={setShowSidebar}
         failedContrastPairIsHidden={failedContrastPairIsHidden}
         fontSize={fontSize}
         fontWeight={fontWeight}
         testForWCAG_AA={testForWCAG_AA}
         testForWCAG_AAA={testForWCAG_AAA}
         testForAPCA={testForAPCA}
+      />
+      <Sidebar 
+        showSidebar={showSidebar}
+        setShowSidebar={setShowSidebar}
+        fontSize={fontSize}
+        fontWeight={fontWeight}
+        textColor={textColor}
+        backgroundColor={backgroundColor}
       />
     </div>
     

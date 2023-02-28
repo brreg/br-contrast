@@ -23,7 +23,7 @@ export default function ColorCards({
         brColors.map( colorCategory => (
           <li key={colorCategory.label} className={styles.row}>
           {
-           colorCategory.colorArray.map( cardColor => showFailedContrastPairs(cardColor.value) && (
+           colorCategory.colorArray.map( cardColor => showCard(cardColor.value) && (
               <button key={cardColor.value} className={styles.card} onClick={() => click(cardColor.value)} style={{ backgroundColor: cardColor.value, color: cardColor.labelTextColor }}>
                 <div className={styles.cardLabelText}>
                   <p>{cardColor.label}</p>
@@ -89,7 +89,7 @@ export default function ColorCards({
     return HeavyColor(colorData, standard)
   }
 
-  function showFailedContrastPairs(cardColor: string) : boolean{
+  function showCard(cardColor: string) : boolean{
     const colorData = getColorData(cardColor)
     const APCA = IsAPCAvalid(colorData)
     const AA = IsAA_valid(colorData)
@@ -97,9 +97,21 @@ export default function ColorCards({
 
     if (!failedContrastPairIsHidden) {
       return true
-    } else {
-      return APCA || AA || AAA
     }
+
+    if (APCA && testForAPCA) {
+      return true
+    }
+
+    if (AAA && testForWCAG_AAA) {
+      return true
+    }
+
+    if (AA && testForWCAG_AA) {
+      return true
+    }
+
+    return false
   }
 
   function getColorData(cardColor: string) : ColorData {

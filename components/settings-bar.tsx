@@ -79,6 +79,8 @@ export default function SettingsBar({
 
   return (
     <div className={styles.settingsRow}>
+      <label className="block mb-2 text-base font-medium text-gray-900 dark:text-white">Large select</label>
+
       <FormControl variant="standard" sx={{ m: 1, minWidth: 400, fontSizeAdjust: 12 }}>
         <InputLabel id="select-color-label">Color</InputLabel>
         <Select

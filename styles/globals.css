@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   font-style: normal;
@@ -8,7 +12,7 @@
   text-align: center;
   margin-left: 10px;
   border-radius: 10px;
-  border-style: solid;
+  border: solid;
   outline: solid white;
   width: auto;
   height: auto;

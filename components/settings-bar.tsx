@@ -79,7 +79,7 @@ export default function SettingsBar({
 
   return (
     <div className={styles.settingsRow}>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 400 }}>
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 400, fontSizeAdjust: 12 }}>
         <InputLabel id="select-color-label">Color</InputLabel>
         <Select
           labelId="select-color-label"

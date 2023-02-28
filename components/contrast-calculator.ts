@@ -13,17 +13,11 @@ export interface ColorData {
   fontWeight: number,
 }
 
-export interface ScorecardColors {
-  textAndBorderColor: string,
-  backgroundColor: string,
-}
-
 export enum ColorStandards {
   APCA,
   WCAG_AAA,
   WCAG_AA,
 }
-
 
 export function CalculateAPCA_value(colorData: ColorData) {
   if (!colorData.textColor || !colorData.backgroundColor) {

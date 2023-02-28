@@ -1,10 +1,9 @@
 import { APCA } from '@/data/apcaTable';
-import { AllColorOptionsInFlatArray, green, red } from '@/data/colors';
+import { green, red } from '@/data/colors';
 import { WCAG } from '@/data/wcagTable';
 import { calcAPCA } from 'apca-w3';
 // @ts-ignore
 import { colorParsley } from 'colorparsley';
-import { CSSProperties } from 'react';
 import { hex } from 'wcag-contrast'
 
 export interface ColorData {
@@ -43,59 +42,60 @@ export function CalculateWCAG_value(colorData: ColorData) : string {
 }
 
 export function IsAPCAvalid(colorData: ColorData) : boolean {
-  const Lc = CalculateAPCA_value(colorData)
-  const minLc = GetMinimumAllowedLcValue(colorData)
-  if (+Lc > (minLc as number)) {
-    return true
-  } else {
+  const contrast = +CalculateAPCA_value(colorData)
+  const minContrast = GetMinimumAllowedLcValue(colorData)
+
+  if (minContrast === false) {
     return false
   }
+  if (contrast > (minContrast as number)) {
+    return true
+  }
+  return false
 }
 
 export function IsAAA_valid(colorData: ColorData) : boolean {
   const contrast = +CalculateWCAG_value(colorData)
   const minContrast = GetMinimumAllowed_AAA_Value(colorData)
 
-  if (contrast > (minContrast as number)) {
-    return true
-  } else {
+  if (minContrast === false) {
     return false
   }
+  if (contrast > (minContrast as number)) {
+    return true
+  }
+  return false
 }
 
 export function IsAA_valid(colorData: ColorData) : boolean {
   const contrast = +CalculateWCAG_value(colorData)
   const minContrast = GetMinimumAllowed_AA_Value(colorData)
 
-  if (contrast > (minContrast as number)) {
-    return true
-  } else {
+  if (minContrast === false) {
     return false
   }
+  if (contrast > (minContrast as number)) {
+    return true
+  }
+  return false
 }
 
-export function GetMinimumAllowedLcValue(colorData: ColorData) : number | undefined {
+export function GetMinimumAllowedLcValue(colorData: ColorData) : number | boolean | undefined {
   const fontWeightObj = APCA.find( (i) => i.value === colorData.fontWeight)
   const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.minimumValidLc
 }
 
-export function GetMinimumAllowed_AAA_Value(colorData: ColorData) : number | undefined {
+export function GetMinimumAllowed_AAA_Value(colorData: ColorData) : number | boolean | undefined {
   const fontWeightObj = WCAG.find( (i) => i.value === colorData.fontWeight)
   const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.AAA_minimumValidContrast
 }
 
-export function GetMinimumAllowed_AA_Value(colorData: ColorData) : number | undefined {
+export function GetMinimumAllowed_AA_Value(colorData: ColorData) : number | boolean | undefined {
   const fontWeightObj = WCAG.find( (i) => i.value === colorData.fontWeight)
   const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.AA_minimumValidContrast
-}
-
-export function FontWeightAndSizeIsValid(colorData: ColorData) : boolean | undefined {
-  const fontWeightObj = APCA.find( (i) => i.value === colorData.fontWeight)
-  const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
-  return obj?.valid
 }
 
 function isScoreValid(colorData: ColorData, standard: ColorStandards) : boolean {

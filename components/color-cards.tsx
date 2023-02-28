@@ -1,8 +1,7 @@
-import { brColors, green, red } from '@/data/colors'
+import { brColors } from '@/data/colors'
 import { ColorCardsProps } from '@/pages';
 import styles from '@/styles/color-cards.module.css'
-import { GetContrast, GetMinimumAllowedLcValue, GetMinimumAllowed_AAA_Value, GetMinimumAllowed_AA_Value } from './contrast-calculator';
-import { hex } from 'wcag-contrast'
+import { CalculateAPCA_value, CalculateWCAG_value, ColorData, ColorStandards, HeavyColor, IsAAA_valid, IsAA_valid, IsAPCAvalid, LightColor } from './contrast-calculator';
 
 export default function ColorCards({
   dropdownColorIsBackground,
@@ -32,19 +31,19 @@ export default function ColorCards({
                 </div>
                 {
                   testForAPCA &&
-                  <div className={styles.scorecard} style={{ backgroundColor: lightColor_APCA(cardColor.value), color: heavyColor_APCA(cardColor.value), borderColor: heavyColor_APCA(cardColor.value)}}>
+                  <div className='scorecard' style={{ backgroundColor: lightColor(cardColor.value, ColorStandards.APCA), color: heavyColor(cardColor.value, ColorStandards.APCA), borderColor: heavyColor(cardColor.value, ColorStandards.APCA)}}>
                     <p>APCA Lc-{findLcValue(cardColor.value)}</p>
                   </div>
                 }
                 {
                   testForWCAG_AAA &&
-                  <div className={styles.scorecard} style={{ backgroundColor: lightColor_AAA(cardColor.value), color: heavyColor_AAA(cardColor.value), borderColor: heavyColor_AAA(cardColor.value)}}>
+                  <div className='scorecard' style={{ backgroundColor: lightColor(cardColor.value, ColorStandards.WCAG_AAA), color: heavyColor(cardColor.value, ColorStandards.WCAG_AAA), borderColor: heavyColor(cardColor.value, ColorStandards.WCAG_AAA)}}>
                     <p>{findWCAGValue(cardColor.value)} AAA</p>
                   </div>
                 }
                 {
                   testForWCAG_AA &&
-                  <div className={styles.scorecard} style={{ backgroundColor: lightColor_AA(cardColor.value), color: heavyColor_AA(cardColor.value), borderColor: heavyColor_AA(cardColor.value)}}>
+                  <div className='scorecard' style={{ backgroundColor: lightColor(cardColor.value, ColorStandards.WCAG_AA), color: heavyColor(cardColor.value, ColorStandards.WCAG_AA), borderColor: heavyColor(cardColor.value, ColorStandards.WCAG_AA)}}>
                     <p>{findWCAGValue(cardColor.value)} AA</p>
                   </div>
                 }
@@ -71,123 +70,53 @@ export default function ColorCards({
   }
 
   function findLcValue(cardColor: string) : string {
-    if (dropdownColorIsBackground) {
-      return GetContrast(cardColor, backgroundColor)
-    } else {
-      return GetContrast(textColor, cardColor)
-    }
+    const data = getColorData(cardColor)
+    return CalculateAPCA_value(data)
   }
 
   function findWCAGValue(cardColor: string) : string {
-    if (dropdownColorIsBackground && backgroundColor !== '') {
-      return hex(cardColor, backgroundColor).toFixed(1).toString()
-    } else if (!dropdownColorIsBackground && textColor !== '') {
-      return hex(cardColor, textColor).toFixed(1).toString()
-    } else {
-      return ""
-    }
+    const colorData = getColorData(cardColor)
+    return CalculateWCAG_value(colorData)
   }
 
-  function isAPCAvalid(cardColor: string) : boolean {
-    const Lc = findLcValue(cardColor)
-    const minLc = GetMinimumAllowedLcValue(fontWeight, fontSize)
-
-    if (+Lc > (minLc as number)) {
-      return true
-    } else {
-      return false
-    }
+  function lightColor(cardColor: string, standard: ColorStandards) : string {
+    const colorData = getColorData(cardColor)
+    return LightColor(colorData, standard)
   }
 
-  function is_AAA_valid(cardColor: string) : boolean {
-    const contrast = +findWCAGValue(cardColor)
-    const minContrast = GetMinimumAllowed_AAA_Value(fontWeight, fontSize)
-
-    if (contrast > (minContrast as number)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  function is_AA_valid(cardColor: string) : boolean {
-    const contrast = +findWCAGValue(cardColor)
-    const minContrast = GetMinimumAllowed_AA_Value(fontWeight, fontSize)
-
-    if (contrast > (minContrast as number)) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  function lightColor_APCA(cardColor: string) : string {
-    const i = isAPCAvalid(cardColor)
-
-    if (i) {
-      return green[1].value
-    } else {
-      return red[0].value
-    }
-  }
-
-  function heavyColor_APCA(cardColor: string) : string {
-    const i = isAPCAvalid(cardColor)
-
-    if (i) {
-      return green[7].value
-    } else {
-      return red[6].value
-    }
-  }
-  function lightColor_AA(cardColor: string) : string {
-    const i = is_AA_valid(cardColor)
-
-    if (i) {
-      return green[1].value
-    } else {
-      return red[0].value
-    }
-  }
-
-  function heavyColor_AA(cardColor: string) : string {
-    const i = is_AA_valid(cardColor)
-
-    if (i) {
-      return green[7].value
-    } else {
-      return red[6].value
-    }
-  }
-  function lightColor_AAA(cardColor: string) : string {
-    const i = is_AAA_valid(cardColor)
-
-    if (i) {
-      return green[1].value
-    } else {
-      return red[0].value
-    }
-  }
-
-  function heavyColor_AAA(cardColor: string) : string {
-    const i = is_AAA_valid(cardColor)
-
-    if (i) {
-      return green[7].value
-    } else {
-      return red[6].value
-    }
+  function heavyColor(cardColor: string, standard: ColorStandards) : string {
+    const colorData = getColorData(cardColor)
+    return HeavyColor(colorData, standard)
   }
 
   function showFailedContrastPairs(cardColor: string) : boolean{
-    const APCA = isAPCAvalid(cardColor)
-    const AA = is_AA_valid(cardColor)
-    const AAA = is_AAA_valid(cardColor)
+    const colorData = getColorData(cardColor)
+    const APCA = IsAPCAvalid(colorData)
+    const AA = IsAA_valid(colorData)
+    const AAA = IsAAA_valid(colorData)
 
     if (!failedContrastPairIsHidden) {
       return true
     } else {
       return APCA || AA || AAA
+    }
+  }
+
+  function getColorData(cardColor: string) : ColorData {
+    if (dropdownColorIsBackground) {
+      return {
+        textColor: cardColor,
+        backgroundColor: backgroundColor,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      }
+    } else {
+      return {
+        textColor: textColor,
+        backgroundColor: cardColor,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      }
     }
   }
 }

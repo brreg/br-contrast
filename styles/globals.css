@@ -2,3 +2,19 @@
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   font-style: normal;
 }
+
+.scorecard {
+  align-items: center;
+  text-align: center;
+  margin-left: 10px;
+  border-radius: 10px;
+  border-style: solid;
+  outline: solid white;
+  width: auto;
+  height: auto;
+  margin-top: 3px;
+}
+
+.scorecard > p {
+  margin: 5px 10px 5px 10px;
+}

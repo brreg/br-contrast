@@ -1,74 +1,129 @@
 import { APCA } from '@/data/apcaTable';
-import { AllColorOptionsInFlatArray } from '@/data/colors';
+import { AllColorOptionsInFlatArray, green, red } from '@/data/colors';
 import { WCAG } from '@/data/wcagTable';
 import { calcAPCA } from 'apca-w3';
 // @ts-ignore
 import { colorParsley } from 'colorparsley';
+import { CSSProperties } from 'react';
+import { hex } from 'wcag-contrast'
 
-export function GetContrast(textColor: string, backgroundColor: string) {
-  if (!textColor || !backgroundColor) {
+export interface ColorData {
+  textColor: string,
+  backgroundColor: string,
+  fontSize: number,
+  fontWeight: number,
+}
+
+export interface ScorecardColors {
+  textAndBorderColor: string,
+  backgroundColor: string,
+}
+
+export enum ColorStandards {
+  APCA,
+  WCAG_AAA,
+  WCAG_AA,
+}
+
+
+export function CalculateAPCA_value(colorData: ColorData) {
+  if (!colorData.textColor || !colorData.backgroundColor) {
     return ""
   } else {
-    const apca = +calcAPCA( colorParsley(textColor), colorParsley(backgroundColor))
+    const apca = +calcAPCA( colorParsley(colorData.textColor), colorParsley(colorData.backgroundColor))
     return Math.abs(apca).toFixed(0)
   }
 }
 
-export function GetMinimumAllowedLcValue(fontWeight: number, fontSize: number) {
-  const fontWeightObj = APCA.find( (i) => i.value === fontWeight)
-  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+export function CalculateWCAG_value(colorData: ColorData) : string {
+  if (colorData.textColor === '' || colorData.backgroundColor === '') {
+    return ""
+  }
+  return hex(colorData.textColor, colorData.backgroundColor).toFixed(1)
+}
+
+export function IsAPCAvalid(colorData: ColorData) : boolean {
+  const Lc = CalculateAPCA_value(colorData)
+  const minLc = GetMinimumAllowedLcValue(colorData)
+  if (+Lc > (minLc as number)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function IsAAA_valid(colorData: ColorData) : boolean {
+  const contrast = +CalculateWCAG_value(colorData)
+  const minContrast = GetMinimumAllowed_AAA_Value(colorData)
+
+  if (contrast > (minContrast as number)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function IsAA_valid(colorData: ColorData) : boolean {
+  const contrast = +CalculateWCAG_value(colorData)
+  const minContrast = GetMinimumAllowed_AA_Value(colorData)
+
+  if (contrast > (minContrast as number)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function GetMinimumAllowedLcValue(colorData: ColorData) : number | undefined {
+  const fontWeightObj = APCA.find( (i) => i.value === colorData.fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.minimumValidLc
 }
 
-export function GetMinimumAllowed_AAA_Value(fontWeight: number, fontSize: number) {
-  const fontWeightObj = WCAG.find( (i) => i.value === fontWeight)
-  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+export function GetMinimumAllowed_AAA_Value(colorData: ColorData) : number | undefined {
+  const fontWeightObj = WCAG.find( (i) => i.value === colorData.fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.AAA_minimumValidContrast
 }
 
-export function GetMinimumAllowed_AA_Value(fontWeight: number, fontSize: number) {
-  const fontWeightObj = WCAG.find( (i) => i.value === fontWeight)
-  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+export function GetMinimumAllowed_AA_Value(colorData: ColorData) : number | undefined {
+  const fontWeightObj = WCAG.find( (i) => i.value === colorData.fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.AA_minimumValidContrast
 }
 
-export function FontWeightAndSizeIsValid(fontWeight: number, fontSize: number) {
-  const fontWeightObj = APCA.find( (i) => i.value === fontWeight)
-  const obj = fontWeightObj?.array.find( (i) => i.fontSize === fontSize)
+export function FontWeightAndSizeIsValid(colorData: ColorData) : boolean | undefined {
+  const fontWeightObj = APCA.find( (i) => i.value === colorData.fontWeight)
+  const obj = fontWeightObj?.array.find( (i) => i.fontSize === colorData.fontSize)
   return obj?.valid
 }
 
-export function FindBackgroundColorWithHighestContrast(textColor: string) {
-  let colorWithHighestContrast = ""
-  let highestLcValue = 0
-
-  AllColorOptionsInFlatArray.map( (color) => {
-    let Lc = Math.abs(+calcAPCA( colorParsley(textColor), colorParsley(color.value)))
-    if (Lc > highestLcValue) {
-      highestLcValue = Lc
-      colorWithHighestContrast = color.value
-    }
-  })
-
-  return colorWithHighestContrast
+function isScoreValid(colorData: ColorData, standard: ColorStandards) : boolean {
+  if (standard === ColorStandards.APCA) {
+    return IsAPCAvalid(colorData)
+  } else if (standard === ColorStandards.WCAG_AAA) {
+    return IsAAA_valid(colorData)
+  } else if (standard === ColorStandards.WCAG_AA) {
+    return IsAA_valid(colorData)
+  } else {
+    return false
+  }
 }
 
-export function FindTextColorWithHighestContrast(backgroundColor: string) {
-  let colorWithHighestContrast = ""
-  let highestLcValue = 0
-
-  AllColorOptionsInFlatArray.map( (color) => {
-    let Lc = Math.abs(+calcAPCA( colorParsley(color.value), colorParsley(backgroundColor)))
-    if (Lc > highestLcValue) {
-      highestLcValue = Lc
-      colorWithHighestContrast = color.value
-    }
-  })
-  return colorWithHighestContrast
+export function LightColor(colorData: ColorData, standard: ColorStandards) : string {
+  const valid = isScoreValid(colorData, standard)
+  if (valid) {
+    return green[1].value
+  } else {
+    return red[0].value
+  }
 }
 
-// export function getFontSize(textColor, backgroundColor, weightIndex) {
-//   const contrast = getContrast(textColor, backgroundColor)
-//   const fontArray = fontLookupAPCA(parseFloat(contrast))
-//   return fontArray[weightIndex]
-// }
+export function HeavyColor(colorData: ColorData, standard: ColorStandards) : string {
+  const valid = isScoreValid(colorData, standard)
+  if (valid) {
+    return green[7].value
+    } else {
+    return red[6].value
+  }
+}

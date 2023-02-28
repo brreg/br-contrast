@@ -1,6 +1,6 @@
 .card {
   margin: 5px;
-  width: 180px;
+  width: 195px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -8,6 +8,7 @@
   font-size: 18px;
   font-weight: 500;
   border-width: 0;
+  text-align: left;
 }
 
 .cardLabelText {
@@ -16,27 +17,6 @@
 
 .cardLabelText > p {
   margin: 0;
-}
-
-.outerScorecard {
-  border-style: solid;
-  border-color: white;
-}
-
-.scorecard {
-  align-items: center;
-  text-align: center;
-  margin-left: 10px;
-  border-radius: 10px;
-  border-style: solid;
-  outline: solid white;
-  width: auto;
-  height: auto;
-  margin-top: 3px;
-}
-
-.scorecard > p {
-  margin: 5px 10px 5px 10px;
 }
 
 .row {

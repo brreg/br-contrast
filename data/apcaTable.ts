@@ -1,3 +1,33 @@
+export const FontWeight100 = [
+  { fontSize: 12, minimumValidLc: false },
+  { fontSize: 14, minimumValidLc: false },
+  { fontSize: 16, minimumValidLc: false },
+  { fontSize: 18, minimumValidLc: false },
+  { fontSize: 20, minimumValidLc: false },
+  { fontSize: 22, minimumValidLc: false },
+  { fontSize: 24, minimumValidLc: false },
+  { fontSize: 26, minimumValidLc: false },
+  { fontSize: 28, minimumValidLc: false },
+  { fontSize: 30, minimumValidLc: false },
+  { fontSize: 32, minimumValidLc: false },
+  { fontSize: 34, minimumValidLc: false },
+  { fontSize: 36, minimumValidLc: false },
+  { fontSize: 38, minimumValidLc: false },
+  { fontSize: 40, minimumValidLc: false },
+  { fontSize: 42, minimumValidLc: false },
+  { fontSize: 44, minimumValidLc: false },
+  { fontSize: 46, minimumValidLc: false },
+  { fontSize: 48, minimumValidLc: false },
+  { fontSize: 50, minimumValidLc: false },
+  { fontSize: 52, minimumValidLc: false },
+  { fontSize: 54, minimumValidLc: false },
+  { fontSize: 56, minimumValidLc: false },
+  { fontSize: 58, minimumValidLc: false },
+  { fontSize: 60, minimumValidLc: false },
+  { fontSize: 62, minimumValidLc: false },
+  { fontSize: 64, minimumValidLc: false },
+]
+
 export const FontWeight200 = [
   { fontSize: 12, minimumValidLc: false },
   { fontSize: 14, minimumValidLc: false },
@@ -239,6 +269,7 @@ export const FontWeight900 = [
 ]
 
 export const APCA = [
+  { label: "100", value: 100, array: FontWeight100},
   { label: "200", value: 200, array: FontWeight200},
   { label: "300", value: 300, array: FontWeight300},
   { label: "400 (normal)", value: 400, array: FontWeight400},

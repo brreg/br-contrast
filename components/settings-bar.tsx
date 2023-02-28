@@ -12,7 +12,7 @@ import Checkbox from '@mui/material/Checkbox';
 import styles from '@/styles/settings-bar.module.css';
 import { AllColorOptionsInFlatArray } from '@/data/colors';
 import { FontWeight200 } from '@/data/apcaTable';
-import { FontWeightAndSizeIsValid, GetMinimumAllowedLcValue } from './contrast-calculator';
+import { ColorData, GetMinimumAllowedLcValue, GetMinimumAllowed_AAA_Value, GetMinimumAllowed_AA_Value } from './contrast-calculator';
 import { WCAG } from '@/data/wcagTable';
 
 export default function SettingsBar({
@@ -37,7 +37,6 @@ export default function SettingsBar({
 }: SettingsProps ) {
 
   const setColorValue = (event: SelectChangeEvent) => {
-    // setColor(event.target.value);
     if (colorIsBackground) {
       setBackgroundColor(event.target.value)
     } else {
@@ -71,9 +70,15 @@ export default function SettingsBar({
   const setTestForAPCAValue = () => {
     setTestForAPCA(!testForAPCA);
   };
+  const colorData : ColorData = {
+    textColor: textColor,
+    backgroundColor: backgroundColor,
+    fontSize: fontSize,
+    fontWeight: fontWeight
+  }
 
   return (
-    <div>
+    <div className={styles.settingsRow}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 400 }}>
         <InputLabel id="select-color-label">Color</InputLabel>
         <Select
@@ -91,63 +96,71 @@ export default function SettingsBar({
           }
         </Select>
       </FormControl>
-      <FormControl>
-        <FormLabel id="select-color-is-background">Selected color is</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="select-color-is-background"
-          name="select-color-is-background"
-          value={colorIsBackground}
-          onChange={setColorIsBackgroundValue}
-        >
-          <FormControlLabel value="false" control={<Radio />} label="Text color" />
-          <FormControlLabel value="true" control={<Radio />} label="Background color" />
-        </RadioGroup>
-      </FormControl>
-      <FormControl>
-        <FormLabel id="select-failed-contrast-pairs-is-hidden">Failed contrast pairs is</FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="select-color-is-background"
-          name="select-color-is-background"
-          value={failedContrastPairIsHidden}
-          onChange={setFailedContrastPairIsHiddenValue}
-        >
-          <FormControlLabel value="false" control={<Radio />} label="Included" />
-          <FormControlLabel value="true" control={<Radio />} label="Hidden" />
-        </RadioGroup>
-      </FormControl>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 80 }}>
-        <InputLabel id="select-font-size">Font-size</InputLabel>
-        <Select
-          labelId="select-font-size"
-          id="select-font-size"
-          value={fontSize.toString()}
-          onChange={setFontSizeValue}
-          label="font-size"
-        >
-          {
-            FontWeight200.map((font) => <MenuItem key={font.fontSize} value={font.fontSize}>{font.fontSize} px</MenuItem>)
-          }
-        </Select>
-      </FormControl>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
-        <InputLabel id="select-font-weight">Weight</InputLabel>
-        <Select
-          labelId="select-font-Weight"
-          id="select-font-Weight"
-          value={fontWeight.toString()}
-          onChange={setFontWeightValue}
-          label="font-Weight"
-        >
-          {
-            WCAG.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
-          }
-        </Select>
-      </FormControl>
-      <div>
-        <p>Minimum allowed Lc value: {GetMinimumAllowedLcValue(fontWeight, fontSize)}</p>
-        <p>Combination is valid: {String(FontWeightAndSizeIsValid(fontWeight, fontSize))}</p>
+      <div className={styles.radioButtons}>
+        <FormControl>
+          <FormLabel id="select-color-is-background">Selected color is</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="select-color-is-background"
+            name="select-color-is-background"
+            value={colorIsBackground}
+            onChange={setColorIsBackgroundValue}
+          >
+            <FormControlLabel value="false" control={<Radio />} label="Text color" />
+            <FormControlLabel value="true" control={<Radio />} label="Background color" />
+          </RadioGroup>
+        </FormControl>
+        <FormControl>
+          <FormLabel id="select-failed-contrast-pairs-is-hidden">Failed contrast pairs is</FormLabel>
+          <RadioGroup
+            row
+            aria-labelledby="select-color-is-background"
+            name="select-color-is-background"
+            value={failedContrastPairIsHidden}
+            onChange={setFailedContrastPairIsHiddenValue}
+          >
+            <FormControlLabel value="false" control={<Radio />} label="Included" />
+            <FormControlLabel value="true" control={<Radio />} label="Hidden" />
+          </RadioGroup>
+        </FormControl>
+      </div>
+      <div className={styles.fonts}>
+        <div className={styles.fontSelector}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 80 }}>
+          <InputLabel id="select-font-size">Font-size</InputLabel>
+          <Select
+            labelId="select-font-size"
+            id="select-font-size"
+            value={fontSize.toString()}
+            onChange={setFontSizeValue}
+            label="font-size"
+          >
+            {
+              FontWeight200.map((font) => <MenuItem key={font.fontSize} value={font.fontSize}>{font.fontSize} px</MenuItem>)
+            }
+          </Select>
+        </FormControl>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 140 }}>
+          <InputLabel id="select-font-weight">Weight</InputLabel>
+          <Select
+            labelId="select-font-Weight"
+            id="select-font-Weight"
+            value={fontWeight.toString()}
+            onChange={setFontWeightValue}
+            label="font-Weight"
+          >
+            {
+              WCAG.map((i) => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
+            }
+          </Select>
+        </FormControl>
+        </div>
+        <div className={styles.fontInfo}>
+          <p>Minimum allowed values:</p>
+          <p>APCA Lc: {GetMinimumAllowedLcValue(colorData)?.toString()}</p>
+          <p>WCAG AAA: {GetMinimumAllowed_AAA_Value(colorData)?.toString()}</p>
+          <p>WCAG AA: {GetMinimumAllowed_AA_Value(colorData)?.toString()}</p>
+        </div>
       </div>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
         <FormLabel component="legend">Test for</FormLabel>

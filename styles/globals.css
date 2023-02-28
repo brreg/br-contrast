@@ -13,6 +13,8 @@
   width: auto;
   height: auto;
   margin-top: 3px;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .scorecard > p {

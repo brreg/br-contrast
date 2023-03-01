@@ -1,11 +1,9 @@
 .sidebar {
   height: 100%;
-  width: 20%;
-  min-width: 500px;
+  width: 25%;
   position: fixed;
-  top: 0;
+  top: 220px;
   right: 0;
-  background-color: #EBF2F3;
 }
 
 .preview {

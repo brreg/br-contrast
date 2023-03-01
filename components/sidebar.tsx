@@ -3,6 +3,7 @@ import styles from '@/styles/sidebar.module.css';
 import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { CalculateAPCA_value, CalculateWCAG_value, ColorData, ColorStandards, HeavyColor, LightColor } from './contrast-calculator';
+import { Box } from '@mui/material';
 
 export default function Sidebar({
   showSidebar,
@@ -20,11 +21,11 @@ export default function Sidebar({
   }
 
   return (
-    <div>
+    <Box>
       {
         showSidebar &&
         <div className={styles.sidebar}>
-          <Button variant='contained' endIcon={<CloseIcon />} onClick={() => setShowSidebar(false)} />
+          {/* <Button variant='contained' endIcon={<CloseIcon />} onClick={() => setShowSidebar(false)} /> */}
           <div className={styles.textRow} >
             <div className={styles.colorBox} style={{ backgroundColor: textColor }}/>
             <p>{textColor.toUpperCase()} - Text Color</p>
@@ -56,6 +57,6 @@ export default function Sidebar({
           </div>
         </div>
       }
-    </div>
+    </Box>
   )
 }

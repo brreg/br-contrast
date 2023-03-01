@@ -1,14 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 * {
   font-family: "Open Sans", Arial, Helvetica, sans-serif;
   font-style: normal;
 }
 
-.dark {
-  background-color: gray;
+body {
+  margin: 0;
 }
 
 .scorecard {
@@ -31,5 +27,4 @@
 
 .mainContent {
   width: 75%;
-  
 }

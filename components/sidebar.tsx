@@ -34,7 +34,7 @@ export default function Sidebar({
             <div className={styles.colorBox} style={{ backgroundColor: backgroundColor }}/>
             <p>{backgroundColor.toUpperCase()} - Background color</p>
           </div>
-          <div className={styles.preview} style={{ fontSize: fontSize, fontWeight: fontWeight, color: textColor, backgroundColor: backgroundColor}}>
+          <div className={styles.previewText} style={{ fontSize: fontSize, fontWeight: fontWeight, color: textColor, backgroundColor: backgroundColor}}>
             <p>
               The Accessible Perceptual Contrast Algorithm (APCA) is a method for calculating and predicting readability contrast. 
               APCA is a part of the larger S-Luv Accessible Color Appearance Model known as SACAM. These models are specifically 
@@ -46,14 +46,16 @@ export default function Sidebar({
               that is, regardless of how light or dark the two colors are, a contrast value of Lc 60 represents the same perceived readability contrast.
             </p>
           </div>
-          <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.APCA), color: HeavyColor(colorData, ColorStandards.APCA), borderColor: HeavyColor(colorData, ColorStandards.APCA)}}>
-            <p>APCA Lc-{CalculateAPCA_value(colorData)}</p>
-          </div>
-          <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.WCAG_AAA), color: HeavyColor(colorData, ColorStandards.WCAG_AAA), borderColor: HeavyColor(colorData, ColorStandards.WCAG_AAA)}}>
-            <p>{CalculateWCAG_value(colorData)} AAA</p>
-          </div>
-          <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.WCAG_AA), color: HeavyColor(colorData, ColorStandards.WCAG_AA), borderColor: HeavyColor(colorData, ColorStandards.WCAG_AA)}}>
-            <p>{CalculateWCAG_value(colorData)} AA</p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: 10 }}>
+            <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.APCA), color: HeavyColor(colorData, ColorStandards.APCA), borderColor: HeavyColor(colorData, ColorStandards.APCA)}}>
+              <p>APCA Lc-{CalculateAPCA_value(colorData)}</p>
+            </div>
+            <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.WCAG_AAA), color: HeavyColor(colorData, ColorStandards.WCAG_AAA), borderColor: HeavyColor(colorData, ColorStandards.WCAG_AAA)}}>
+              <p>{CalculateWCAG_value(colorData)} AAA</p>
+            </div>
+            <div className='scorecard' style={{ backgroundColor: LightColor(colorData, ColorStandards.WCAG_AA), color: HeavyColor(colorData, ColorStandards.WCAG_AA), borderColor: HeavyColor(colorData, ColorStandards.WCAG_AA)}}>
+              <p>{CalculateWCAG_value(colorData)} AA</p>
+            </div>
           </div>
         </div>
       }

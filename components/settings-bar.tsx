@@ -14,6 +14,7 @@ import { AllColorOptionsInFlatArray } from '@/data/colors';
 import { FontWeight200 } from '@/data/apcaTable';
 import { ColorData, GetMinimumAllowedLcValue, GetMinimumAllowed_AAA_Value, GetMinimumAllowed_AA_Value } from './contrast-calculator';
 import { WCAG } from '@/data/wcagTable';
+import { Typography } from '@mui/material';
 
 export default function SettingsBar({
   colorIsBackground,
@@ -155,12 +156,12 @@ export default function SettingsBar({
             </Select>
           </FormControl>
           </div>
-          <div className={styles.textMinimumValues}>
-            <p>Minimum allowed values:</p>
-            <p>APCA Lc: {GetMinimumAllowedLcValue(colorData)?.toString()}</p>
-            <p>WCAG AAA: {GetMinimumAllowed_AAA_Value(colorData)?.toString()}</p>
-            <p>WCAG AA: {GetMinimumAllowed_AA_Value(colorData)?.toString()}</p>
-          </div>
+          <Typography  className={styles.textMinimumValues}>
+            <p style={{ marginTop: 0 }}>Minimum allowed values:</p>
+            <p style={{ margin: 0 }}>APCA Lc: {GetMinimumAllowedLcValue(colorData)?.toString()}</p>
+            <p style={{ margin: 0 }}>WCAG AAA: {GetMinimumAllowed_AAA_Value(colorData)?.toString()}</p>
+            <p style={{ margin: 0 }}>WCAG AA: {GetMinimumAllowed_AA_Value(colorData)?.toString()}</p>
+          </Typography>
         </div>
         <FormControl className={styles.testForButtons} component="fieldset" variant="standard">
           <FormLabel component="legend">Test for</FormLabel>

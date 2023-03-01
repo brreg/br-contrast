@@ -1,5 +1,4 @@
 import { SettingsProps } from '@/pages';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -156,14 +155,15 @@ export default function SettingsBar({
             </Select>
           </FormControl>
           </div>
-          <Typography  className={styles.textMinimumValues}>
-            <p style={{ marginTop: 0 }}>Minimum allowed values:</p>
-            <p style={{ margin: 0 }}>APCA Lc: {GetMinimumAllowedLcValue(colorData)?.toString()}</p>
-            <p style={{ margin: 0 }}>WCAG AAA: {GetMinimumAllowed_AAA_Value(colorData)?.toString()}</p>
-            <p style={{ margin: 0 }}>WCAG AA: {GetMinimumAllowed_AA_Value(colorData)?.toString()}</p>
-          </Typography>
+          <div className={styles.textMinimumValues}>
+            <label>Minimum allowed values:</label>
+            <label>APCA Lc: {GetMinimumAllowedLcValue(colorData)?.toString()}</label>
+            <label>WCAG AAA: {GetMinimumAllowed_AAA_Value(colorData)?.toString()}</label>
+            <label>WCAG AA: {GetMinimumAllowed_AA_Value(colorData)?.toString()}</label>
+          </div>
         </div>
-        <FormControl className={styles.testForButtons} component="fieldset" variant="standard">
+        <div className={styles.testForButtons}>
+        <FormControl  component="fieldset" variant="standard">
           <FormLabel component="legend">Test for</FormLabel>
           <FormGroup>
             <FormControlLabel
@@ -171,23 +171,22 @@ export default function SettingsBar({
                 <Checkbox checked={testForAPCA} onChange={setTestForAPCAValue} name="APCA" />
               }
               label="APCA"
+              />
+            <FormControlLabel
+            control={
+              <Checkbox checked={testForWCAG_AAA} onChange={setTestForWCAG_AAA_Value} name="WCAG AAA" />
+            }
+            label="WCAG AAA"
             />
             <FormControlLabel
-            
-              control={
-                <Checkbox checked={testForWCAG_AAA} onChange={setTestForWCAG_AAA_Value} name="WCAG AAA" />
-              }
-              label="WCAG AAA"
-            />
-            <FormControlLabel
-            
-              control={
-                <Checkbox checked={testForWCAG_AA} onChange={setTestForWCAG_AA_Value} name="WCAG AA" />
-              }
-              label="WCAG AA"
+            control={
+              <Checkbox checked={testForWCAG_AA} onChange={setTestForWCAG_AA_Value} name="WCAG AA" />
+            }
+            label="WCAG AA"
             />
           </FormGroup>
         </FormControl>
+        </div>
     </div>
   );
 
